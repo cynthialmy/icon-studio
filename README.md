@@ -1,4 +1,4 @@
-# Brand Icon System
+# Icon Studio
 
 **Icon Studio** — A web app for generating unique iOS and Android app icons. Create original, deterministic designs from app names with algorithmic generation, preview variants, and export production-ready PNG assets.
 
@@ -96,7 +96,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 The app uses a deterministic hash-based algorithm to generate designs:
 
 - **Input**: App name (e.g., "Aura", "Hello")
-- **Process**: 
+- **Process**:
   - Hash the name to generate a seed
   - Derive color palette (hue, saturation, lightness)
   - Select design style (1 of 6 styles)
@@ -167,7 +167,7 @@ This project is configured for automatic deployment to GitHub Pages.
   - Building the production bundle
   - Deploying to GitHub Pages
   - Automatic re-deployment on every push to `main`
-  
+
 - **Vite configuration** automatically detects GitHub Pages environment and sets the correct base path
 
 ### Manual Deployment (Alternative):
