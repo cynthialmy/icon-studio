@@ -52,7 +52,7 @@
 ```sh
 # Clone the repository
 git clone <YOUR_GIT_URL>
-cd brand-icon-system
+cd icon-studio
 
 # Install dependencies
 npm install
@@ -158,8 +158,8 @@ This project is configured for automatic deployment to GitHub Pages.
 
 3. **Access your deployed app:**
    - After deployment completes, your app will be available at:
-   - `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
-   - The workflow automatically configures the correct base path
+   - `https://YOUR_USERNAME.github.io/icon-studio/`
+   - The workflow automatically configures the correct base path based on your repository name
 
 ### How It Works:
 
