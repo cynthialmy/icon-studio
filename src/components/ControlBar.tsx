@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "@/components/ui/sonner";
 
 interface ControlBarProps {
   appName: string;
@@ -9,6 +10,7 @@ interface ControlBarProps {
   setMode: (v: "light" | "dark") => void;
   platform: "ios" | "android";
   setPlatform: (v: "ios" | "android") => void;
+  onExport?: () => Promise<void>;
 }
 
 const ToggleButton: React.FC<{
@@ -37,7 +39,24 @@ const ControlBar: React.FC<ControlBarProps> = ({
   setMode,
   platform,
   setPlatform,
+  onExport,
 }) => {
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExport = async () => {
+    if (!onExport) return;
+    setIsExporting(true);
+    try {
+      await onExport();
+      toast.success(`Downloaded ${appName}-icons.zip`);
+    } catch (error) {
+      console.error('Export failed:', error);
+      toast.error('Failed to export assets. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return (
     <div className="glass-panel rounded-2xl p-5 flex flex-wrap items-center gap-5">
       {/* App Name */}
@@ -99,6 +118,23 @@ const ControlBar: React.FC<ControlBarProps> = ({
           </ToggleButton>
         </div>
       </div>
+
+      {/* Export Button */}
+      {onExport && (
+        <div className="flex flex-col gap-1.5 ml-auto">
+          <button
+            onClick={handleExport}
+            disabled={isExporting}
+            className={`px-6 py-2 text-sm font-medium font-body rounded-lg transition-all duration-200 ${
+              isExporting
+                ? "bg-secondary text-secondary-foreground cursor-not-allowed"
+                : "bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:bg-primary/90"
+            }`}
+          >
+            {isExporting ? "Exporting..." : "📦 Export Assets"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

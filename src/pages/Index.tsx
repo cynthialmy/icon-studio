@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import ControlBar from "@/components/ControlBar";
-import IconCanvas from "@/components/IconCanvas";
+import IconCanvas, { getIconSvgString } from "@/components/IconCanvas";
 import DevicePreview from "@/components/DevicePreview";
 import SizeGrid from "@/components/SizeGrid";
 import SpecsPanel from "@/components/SpecsPanel";
+import { generateDesignSpec } from "@/lib/designGenerator";
+import { buildExportZip, downloadBlob } from "@/lib/exportUtils";
 
 const Index = () => {
   const [appName, setAppName] = useState("Aura");
   const [variant, setVariant] = useState<"logo" | "name">("logo");
   const [mode, setMode] = useState<"light" | "dark">("light");
   const [platform, setPlatform] = useState<"ios" | "android">("ios");
+
+  // Generate design spec once per app name
+  const designSpec = useMemo(() => generateDesignSpec(appName), [appName]);
+
+  // Export handler
+  const handleExport = async () => {
+    const borderRadius = platform === "ios" ? "22.37%" : "50%";
+    
+    const svgGenerator = (size: number, variant: "logo" | "name", mode: "light" | "dark") => {
+      return getIconSvgString(appName, variant, mode, size, borderRadius, designSpec);
+    };
+
+    const zipBlob = await buildExportZip(svgGenerator, appName, platform);
+    const filename = `${appName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}-icons.zip`;
+    downloadBlob(zipBlob, filename);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -43,7 +61,8 @@ const Index = () => {
           mode={mode}
           setMode={setMode}
           platform={platform}
-          setPlatform={setPlatform}
+              setPlatform={setPlatform}
+          onExport={handleExport}
         />
 
         {/* Main preview area */}
@@ -61,6 +80,7 @@ const Index = () => {
                   mode={mode}
                   size={180}
                   borderRadius={platform === "ios" ? "22.37%" : "50%"}
+                  designSpec={designSpec}
                 />
               </div>
               <p className="text-sm font-body font-medium text-foreground">{appName}</p>
@@ -82,6 +102,7 @@ const Index = () => {
                     mode="light"
                     size={80}
                     borderRadius={platform === "ios" ? "22.37%" : "50%"}
+                    designSpec={designSpec}
                   />
                   <span className="text-[10px] text-muted-foreground font-body">Light</span>
                 </div>
@@ -92,6 +113,7 @@ const Index = () => {
                     mode="dark"
                     size={80}
                     borderRadius={platform === "ios" ? "22.37%" : "50%"}
+                    designSpec={designSpec}
                   />
                   <span className="text-[10px] text-muted-foreground font-body">Dark</span>
                 </div>
@@ -111,6 +133,7 @@ const Index = () => {
               variant={variant}
               mode={mode}
               platform={platform}
+              designSpec={designSpec}
             />
           </div>
 
@@ -120,12 +143,13 @@ const Index = () => {
               <h3 className="text-xs font-body font-medium text-muted-foreground uppercase tracking-wider mb-4">
                 Export Sizes — {platform === "ios" ? "iOS" : "Android"}
               </h3>
-              <SizeGrid
-                appName={appName}
-                variant={variant}
-                mode={mode}
-                platform={platform}
-              />
+            <SizeGrid
+              appName={appName}
+              variant={variant}
+              mode={mode}
+              platform={platform}
+              designSpec={designSpec}
+            />
             </div>
 
             {/* All 4 variants grid */}
@@ -151,6 +175,7 @@ const Index = () => {
                           mode={m}
                           size={64}
                           borderRadius={platform === "ios" ? "22.37%" : "50%"}
+                          designSpec={designSpec}
                         />
                       </div>
                       <span className="text-[10px] text-muted-foreground font-body capitalize">

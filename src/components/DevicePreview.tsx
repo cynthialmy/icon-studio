@@ -1,14 +1,16 @@
 import React from "react";
 import IconCanvas from "./IconCanvas";
+import { DesignSpec } from "@/lib/designGenerator";
 
 interface DevicePreviewProps {
   appName: string;
   variant: "logo" | "name";
   mode: "light" | "dark";
   platform: "ios" | "android";
+  designSpec?: DesignSpec;
 }
 
-const DevicePreview: React.FC<DevicePreviewProps> = ({ appName, variant, mode, platform }) => {
+const DevicePreview: React.FC<DevicePreviewProps> = ({ appName, variant, mode, platform, designSpec }) => {
   const isLight = mode === "light";
   const isIOS = platform === "ios";
 
@@ -71,7 +73,8 @@ const DevicePreview: React.FC<DevicePreviewProps> = ({ appName, variant, mode, p
               variant={variant}
               mode={mode}
               size={48}
-              borderRadius={isIOS ? "22.37%" : isIOS ? "22.37%" : "50%"}
+              borderRadius={isIOS ? "22.37%" : "50%"}
+              designSpec={designSpec}
             />
             <span
               style={{ fontSize: 8, color: isLight ? "hsl(220 20% 30%)" : "hsl(220 14% 80%)" }}

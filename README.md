@@ -1,73 +1,78 @@
-# Welcome to your Lovable project
+# Brand Icon System
 
-## Project info
+**Icon Studio** — A desktop web app for designing iOS and Android app icons. Preview variants, light/dark modes, platform-specific masks, and export sizes in one place.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- **App name** — Customize the label (up to 12 characters). Long names show initials in the name variant.
+- **Variants** — **Logo** (abstract geometric mark) or **Name** (initials/text).
+- **Modes** — Light and dark icon variants.
+- **Platform** — iOS (squircle mask, 22.37% radius) or Android (circular mask).
+- **Main preview** — Large icon with platform mask and mode comparison.
+- **Device preview** — Phone mockup showing the icon on a home screen.
+- **Export sizes** — iOS (1024px App Store, 180px, 120px, 87px, 60px, 40px, 29px) and Android (512px Play Store, 432px adaptive, 48dp, 36dp, 24dp).
+- **Specs panel** — Platform-specific guidelines (format, color profile, dimensions).
+- **Accessibility** — Notes on contrast, legibility, and silhouette.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Vite** — Fast dev server, HMR
+- **React 18** — UI
+- **TypeScript** — Type safety
+- **Tailwind CSS** — Styling
+- **shadcn/ui** — Radix-based components
+- **React Router** — Routing
+- **Vitest** — Testing
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+**Requirements:** Node.js 18+ and npm (or bun)
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
+cd brand-icon-system
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Scripts
 
-**Use GitHub Codespaces**
+| Command         | Description                    |
+|----------------|--------------------------------|
+| `npm run dev`  | Start dev server (Vite)        |
+| `npm run build`| Production build               |
+| `npm run build:dev` | Development build       |
+| `npm run preview`   | Preview production build |
+| `npm run lint` | Run ESLint                     |
+| `npm run test` | Run Vitest tests               |
+| `npm run test:watch` | Run tests in watch mode  |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/       # UI components
+│   ├── ControlBar.tsx   # App name, variant, mode, platform controls
+│   ├── DevicePreview.tsx # Phone mockup with home screen
+│   ├── IconCanvas.tsx   # Renders the icon (logo or name variant)
+│   ├── SizeGrid.tsx     # Export size previews
+│   ├── SpecsPanel.tsx   # Platform specs
+│   └── ui/              # shadcn/ui primitives
+├── hooks/
+├── lib/
+├── pages/
+│   ├── Index.tsx        # Main app page
+│   └── NotFound.tsx
+└── test/
+```
 
-This project is built with:
+## License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Private project.

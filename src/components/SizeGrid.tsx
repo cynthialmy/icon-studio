@@ -1,11 +1,13 @@
 import React from "react";
 import IconCanvas from "./IconCanvas";
+import { DesignSpec } from "@/lib/designGenerator";
 
 interface SizeGridProps {
   appName: string;
   variant: "logo" | "name";
   mode: "light" | "dark";
   platform: "ios" | "android";
+  designSpec?: DesignSpec;
 }
 
 const iosSizes = [
@@ -27,7 +29,7 @@ const androidSizes = [
   { label: "24dp", size: 24, display: 20 },
 ];
 
-const SizeGrid: React.FC<SizeGridProps> = ({ appName, variant, mode, platform }) => {
+const SizeGrid: React.FC<SizeGridProps> = ({ appName, variant, mode, platform, designSpec }) => {
   const sizes = platform === "ios" ? iosSizes : androidSizes;
 
   return (
@@ -40,6 +42,7 @@ const SizeGrid: React.FC<SizeGridProps> = ({ appName, variant, mode, platform })
             mode={mode}
             size={s.display}
             borderRadius={platform === "ios" ? "22.37%" : "50%"}
+            designSpec={designSpec}
           />
           <div className="text-center">
             <p className="text-xs font-body font-medium text-foreground">{s.size}px</p>
