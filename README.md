@@ -73,6 +73,37 @@ src/
 └── test/
 ```
 
+## Deployment to GitHub Pages
+
+This project is configured for automatic deployment to GitHub Pages.
+
+### Setup Steps:
+
+1. **Enable GitHub Pages in your repository:**
+   - Go to your repository on GitHub
+   - Navigate to **Settings** → **Pages**
+   - Under **Source**, select **GitHub Actions**
+
+2. **Push your code:**
+   - The workflow will automatically deploy when you push to the `main` branch
+   - Or manually trigger it from **Actions** → **Deploy to GitHub Pages** → **Run workflow**
+
+3. **Access your deployed app:**
+   - After deployment completes, your app will be available at:
+   - `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
+
+### Manual Deployment (Alternative):
+
+If you prefer manual deployment:
+
+```sh
+# Build the project
+npm run build
+
+# The dist folder contains the built files
+# You can deploy the contents of dist/ to GitHub Pages manually
+```
+
 ## License
 
 Private project.
