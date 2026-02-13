@@ -32,7 +32,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Repo name will be: $(echo '${{ github.repository }}' | cut -d'/' -f2)"
+          npm run build
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           NODE_ENV: production
