@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(220, 70%, 55%)" />
+      <stop offset="100%" stop-color="hsl(260, 60%, 58%)" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="100" height="100" rx="22.37" fill="url(#bgGrad)" />
+  <!-- Glass overlay -->
+  <rect width="100" height="100" rx="22.37" fill="url(#glassOverlay)" />
+  <defs>
+    <linearGradient id="glassOverlay" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.25)" />
+      <stop offset="50%" stop-color="transparent" />
+      <stop offset="100%" stop-color="rgba(0,0,0,0.05)" />
+    </linearGradient>
+  </defs>
+  <!-- Icon mark - rounded square with circle -->
+  <g transform="translate(50, 50)">
+    <rect x="-18" y="-18" width="36" height="36" rx="8" fill="none" stroke="white" stroke-width="4" opacity="0.9" />
+    <circle cx="0" cy="0" r="8" fill="white" opacity="0.95" />
+    <rect x="-6" y="-18" width="12" height="12" rx="2" fill="white" opacity="0.6" />
+  </g>
+</svg>

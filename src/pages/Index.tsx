@@ -36,9 +36,18 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg glass-icon flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-                <rect x="4" y="4" width="16" height="16" rx="4" />
-                <circle cx="12" cy="12" r="3" />
+              <svg viewBox="0 0 100 100" className="w-full h-full" fill="none">
+                <defs>
+                  <linearGradient id="headerIconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="rgba(255,255,255,0.95)" />
+                    <stop offset="100%" stopColor="rgba(255,255,255,0.85)" />
+                  </linearGradient>
+                </defs>
+                <g transform="translate(50, 50)">
+                  <rect x="-18" y="-18" width="36" height="36" rx="8" fill="none" stroke="url(#headerIconGrad)" strokeWidth="4" opacity="0.9" />
+                  <circle cx="0" cy="0" r="8" fill="url(#headerIconGrad)" opacity="0.95" />
+                  <rect x="-6" y="-18" width="12" height="12" rx="2" fill="url(#headerIconGrad)" opacity="0.6" />
+                </g>
               </svg>
             </div>
             <h1 className="font-display font-bold text-lg text-foreground tracking-tight">
