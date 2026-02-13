@@ -159,6 +159,7 @@ This project is configured for automatic deployment to GitHub Pages.
 3. **Access your deployed app:**
    - After deployment completes, your app will be available at:
    - `https://YOUR_USERNAME.github.io/icon-studio/`
+   - Example: [https://cynthialmy.github.io/icon-studio/](https://cynthialmy.github.io/icon-studio/)
    - The workflow automatically configures the correct base path based on your repository name
 
 ### How It Works:
