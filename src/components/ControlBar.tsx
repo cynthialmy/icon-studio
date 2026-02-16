@@ -58,7 +58,7 @@ const ControlBar: React.FC<ControlBarProps> = ({
   };
 
   return (
-    <div className="glass-panel rounded-2xl p-5 flex flex-wrap items-center gap-5">
+    <div className="glass-panel-enhanced rounded-3xl p-6 flex flex-wrap items-center gap-6">
       {/* App Name */}
       <div className="flex flex-col gap-1.5">
         <label className="text-xs font-body font-medium text-muted-foreground uppercase tracking-wider">

@@ -26,7 +26,7 @@ const SpecsPanel: React.FC<SpecsPanelProps> = ({ platform, mode }) => {
       ];
 
   return (
-    <div className="glass-panel rounded-2xl p-5">
+    <div className="glass-panel-enhanced rounded-2xl p-5">
       <h3 className="font-display font-semibold text-foreground text-sm mb-3 flex items-center gap-2">
         {isIOS ? "🍎" : "🤖"} {isIOS ? "iOS" : "Android"} Specs — {mode === "light" ? "Light" : "Dark"} Mode
       </h3>
