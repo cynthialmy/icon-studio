@@ -6,7 +6,7 @@ import SizeGrid from "@/components/SizeGrid";
 import SpecsPanel from "@/components/SpecsPanel";
 import WaitlistForm from "@/components/WaitlistForm";
 import ScreenshotGenerator from "@/components/ScreenshotGenerator";
-import { generateDesignSpec } from "@/lib/designGenerator";
+import { generateDesignSpec, DesignParams } from "@/lib/designGenerator";
 import { buildExportZip, downloadBlob } from "@/lib/exportUtils";
 
 const Index = () => {
@@ -15,9 +15,10 @@ const Index = () => {
   const [mode, setMode] = useState<"light" | "dark">("light");
   const [platform, setPlatform] = useState<"ios" | "android">("ios");
   const [waitlistScreenshots, setWaitlistScreenshots] = useState<File[]>([]);
+  const [designParams, setDesignParams] = useState<DesignParams>({});
 
-  // Generate design spec once per app name
-  const designSpec = useMemo(() => generateDesignSpec(appName), [appName]);
+  // Generate design spec when app name or design params change
+  const designSpec = useMemo(() => generateDesignSpec(appName, designParams), [appName, designParams]);
 
   const handleScreenshotUpload = (files: File[]) => {
     setWaitlistScreenshots(files);
@@ -113,6 +114,8 @@ const Index = () => {
             setMode={setMode}
             platform={platform}
             setPlatform={setPlatform}
+            designParams={designParams}
+            setDesignParams={setDesignParams}
             onExport={handleExport}
           />
         </div>

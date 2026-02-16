@@ -55,31 +55,56 @@ export interface DesignSpec {
   elementCount: number; // 2-8
   scaleFactor: number; // 0.5-1.0
 
+  // Expressive parameters
+  vibrancy: number; // 0-100 (affects saturation and contrast)
+  complexity: number; // 0-100 (affects element count and detail)
+  sizeVariation: number; // 0-100 (affects size differences between elements)
+  rotation: number; // 0-360 (rotation angle for elements)
+  patternDensity: number; // 0-100 (affects spacing and density)
+
   // Seed for per-style randomness
   seed: number;
+}
+
+export interface DesignParams {
+  vibrancy?: number; // 0-100, default 50
+  complexity?: number; // 0-100, default 50
+  sizeVariation?: number; // 0-100, default 50
+  rotation?: number; // 0-360, default 0
+  patternDensity?: number; // 0-100, default 50
 }
 
 /**
  * Generate a deterministic design spec from an app name
  */
-export function generateDesignSpec(appName: string): DesignSpec {
+export function generateDesignSpec(appName: string, params?: DesignParams): DesignSpec {
   const hash = hashString(appName.toLowerCase().trim());
   const rng = new SeededRandom(hash);
 
-  // Generate color palette
+  // Get expressive parameters (default to 50 for sliders, 0 for rotation)
+  const vibrancy = params?.vibrancy ?? 50;
+  const complexity = params?.complexity ?? 50;
+  const sizeVariation = params?.sizeVariation ?? 50;
+  const rotation = params?.rotation ?? 0;
+  const patternDensity = params?.patternDensity ?? 50;
+
+  // Generate color palette (vibrancy affects saturation range)
+  const baseSaturation = 30 + (vibrancy / 100) * 60; // 30-90 based on vibrancy
   const primaryHue = rng.range(0, 360);
   const secondaryHue = (primaryHue + rng.range(60, 120)) % 360;
-  const saturation = rng.range(50, 85);
+  const saturation = rng.range(baseSaturation * 0.7, baseSaturation);
   const lightness = rng.range(45, 65); // Light mode
   const darkLightness = rng.range(20, 35); // Dark mode
 
   // Style selection (6 styles available)
   const styleIndex = rng.int(0, 5);
 
-  // Composition
+  // Composition (complexity affects element count)
   const symmetryTypes: DesignSpec['symmetry'][] = ['radial', 'diagonal', 'horizontal', 'vertical', 'none'];
   const symmetry = rng.pick(symmetryTypes);
-  const elementCount = rng.int(2, 8);
+  // Element count directly affected by complexity (2-8 elements)
+  const baseElementCount = 2 + Math.floor(complexity * 6); // 2-8 based on complexity (0-1 range)
+  const elementCount = Math.max(2, Math.min(8, baseElementCount));
   const scaleFactor = rng.range(0.6, 0.9);
 
   return {
@@ -92,6 +117,11 @@ export function generateDesignSpec(appName: string): DesignSpec {
     symmetry,
     elementCount,
     scaleFactor,
+    vibrancy,
+    complexity,
+    sizeVariation,
+    rotation,
+    patternDensity,
     seed: hash,
   };
 }
@@ -108,7 +138,11 @@ export function hslColor(hue: number, saturation: number, lightness: number): st
  */
 export function getGradientStops(spec: DesignSpec, mode: 'light' | 'dark'): string[] {
   const lightness = mode === 'light' ? spec.lightness : spec.darkLightness;
-  const lightStop = hslColor(spec.primaryHue, spec.saturation, lightness);
-  const darkStop = hslColor(spec.secondaryHue, spec.saturation, lightness * 0.7);
+  // Apply vibrancy to saturation (higher vibrancy = more saturated)
+  const vibrancyFactor = (spec.vibrancy ?? 50) / 100;
+  const adjustedSaturation = spec.saturation * (0.7 + vibrancyFactor * 0.6); // Scale 0.7-1.3x
+  
+  const lightStop = hslColor(spec.primaryHue, Math.min(100, adjustedSaturation), lightness);
+  const darkStop = hslColor(spec.secondaryHue, Math.min(100, adjustedSaturation), lightness * 0.7);
   return [lightStop, darkStop];
 }
