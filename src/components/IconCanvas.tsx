@@ -74,6 +74,8 @@ export function getIconSvgString(
 
   let foregroundContent = "";
   if (variant === "logo") {
+    // Logo designs are already centered (they use center = size/2 in their coordinates)
+    // So we don't need to translate them
     foregroundContent = renderDesignStyle(spec, size, mode, appName);
   } else {
     const textColor = isLight ? "hsl(0, 0%, 100%)" : "hsl(220, 20%, 90%)";
@@ -154,9 +156,15 @@ export function getIconSvgString(
         style="filter: blur(8px);"
       />
       
-      <g transform="translate(${size * 0.5}, ${size * 0.5})">
-        ${foregroundContent}
-      </g>
+      ${variant === "logo" ? (
+        // Logo designs are already centered, render directly
+        foregroundContent
+      ) : (
+        // Text variant needs centering via transform
+        `<g transform="translate(${size * 0.5}, ${size * 0.5})">
+          ${foregroundContent}
+        </g>`
+      )}
     </svg>
   `;
 }
